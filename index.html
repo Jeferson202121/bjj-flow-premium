@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="manifest" href="manifest.json">
-    <title>BJJ FLOW PRO</title>
+    <title>MOURA BJJ SYSTEM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; background: #0b0b0d; color: #fafafa; -webkit-tap-highlight-color: transparent; }
@@ -12,45 +12,46 @@
         .input-pro { background: #1a1a1e; border: 1px solid #333; border-radius: 10px; padding: 12px; color: white; width: 100%; outline: none; font-size: 14px; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 100; align-items: center; justify-content: center; padding: 15px; overflow-y: auto; }
         .modal.active { display: flex; }
-        .day-chip { padding: 8px; border-radius: 8px; font-size: 10px; font-weight: 800; border: 1px solid #333; cursor: pointer; text-align: center; flex: 1; }
-        .day-chip.selected { background: #a855f7; border-color: #c084fc; color: white; }
+        .logo-container { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #e11d48; overflow: hidden; background: #1a1a1e; display: flex; align-items: center; justify-content: center; }
+        .badge-apto { background: linear-gradient(45deg, #ffd700, #b8860b); color: black; font-weight: 900; padding: 2px 6px; border-radius: 4px; font-size: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        .day-chip { padding: 8px; border-radius: 8px; font-size: 10px; font-weight: 800; border: 1px solid #333; cursor: pointer; text-align: center; flex: 1; transition: 0.3s; }
+        .day-chip.selected { background: #e11d48; border-color: #fb7185; color: white; }
     </style>
 </head>
-<body class="p-4 pb-32">
+<body class="p-4 pb-40">
 
     <header class="max-w-6xl mx-auto flex justify-between items-center mb-6">
         <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-purple-900/40">
-                <span class="text-xl font-black italic text-white">B</span>
+            <div class="logo-container border-red-600 shadow-lg shadow-red-900/20">
+                <img src="./logo.png" alt="Moura BJJ" class="w-full h-full object-contain">
             </div>
             <div>
-                <h1 class="text-lg font-black uppercase italic leading-none">BJJ FLOW PRO</h1>
-                <p id="stats-topo" class="text-[9px] text-purple-400 font-bold uppercase tracking-widest italic">0 ATLETAS</p>
+                <h1 class="text-lg font-black uppercase italic leading-none">MOURA <span class="text-red-600">BJJ</span></h1>
+                <p id="stats-topo" class="text-[9px] text-zinc-500 font-bold uppercase italic">CARREGANDO...</p>
             </div>
         </div>
         <div class="flex gap-2">
-            <button onclick="openM('m-financeiro')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800">💰</button>
-            <button onclick="openM('m-mural')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800">📢</button>
-            <button onclick="openM('m-gestao-geral')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800">⚙️</button>
+            <button onclick="openM('m-mural')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800 shadow-md">📢</button>
+            <button onclick="openM('m-financeiro')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800 shadow-md">💰</button>
+            <button onclick="openM('m-gestao-geral')" class="bg-zinc-900 p-3 rounded-xl border border-zinc-800 shadow-md">⚙️</button>
         </div>
     </header>
 
-    <div id="display-mural" class="max-w-6xl mx-auto mb-6 bg-blue-900/20 border border-blue-500/30 p-4 rounded-2xl hidden italic text-xs text-blue-300"></div>
-
     <main class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-[10px] font-black uppercase italic text-zinc-500 tracking-widest">Painel Geral</h2>
-            <button onclick="resetFormAluno(); openM('m-aluno')" class="bg-purple-600 px-4 py-2 rounded-lg text-[10px] font-black uppercase">+ Novo Aluno</button>
+            <h2 class="text-[10px] font-black uppercase italic text-zinc-500 tracking-widest">Painel de Graduação</h2>
+            <button onclick="resetFormAluno(); openM('m-aluno')" class="bg-red-600 px-5 py-2 rounded-lg text-[10px] font-black uppercase shadow-lg shadow-red-900/40">+ Novo Atleta</button>
         </div>
         
-        <div class="glass rounded-3xl p-4 overflow-x-auto">
-            <table class="w-full text-left min-w-[1000px]">
+        <div class="glass rounded-3xl p-4 overflow-x-auto border-t-2 border-red-600/30">
+            <table class="w-full text-left min-w-[1100px]">
                 <thead>
-                    <tr class="text-zinc-600 text-[10px] font-black uppercase border-b border-zinc-800 pb-2">
-                        <th class="pb-2">Atleta / ID</th>
-                        <th class="pb-2">Idade (Manual)</th>
-                        <th class="pb-2">Graduação / Escola</th>
-                        <th class="pb-2">Frequência</th>
+                    <tr class="text-zinc-600 text-[10px] font-black uppercase border-b border-zinc-800 pb-2 italic">
+                        <th class="pb-2">ID / Atleta</th>
+                        <th class="pb-2">Ficha (Peso/Idade)</th>
+                        <th class="pb-2">Faixa / Unidade</th>
+                        <th class="pb-2">Frequência / Aptidão</th>
                         <th class="pb-2">Financeiro</th>
                         <th class="pb-2 text-right">Ações</th>
                     </tr>
@@ -60,242 +61,279 @@
         </div>
     </main>
 
-    <div id="m-aluno" class="modal">
-        <div class="glass p-8 rounded-[2.5rem] w-full max-w-lg">
-            <h2 id="titulo-aluno" class="text-xl font-black uppercase italic text-purple-500 mb-6">Ficha do Atleta</h2>
-            <form onsubmit="saveAluno(event)" class="space-y-4">
-                <input type="hidden" id="a-id">
-                <input type="text" id="a-nome" class="input-pro" placeholder="Nome Completo" required>
+    <div id="m-gestao-geral" class="modal">
+        <div class="glass p-8 rounded-[2.5rem] w-full max-w-2xl border border-red-600/20">
+            <h2 class="text-xl font-black uppercase italic text-red-600 mb-6">Configurar Unidades</h2>
+            <div class="bg-zinc-900/50 p-5 rounded-2xl mb-6 border border-zinc-800 space-y-4">
+                <input type="text" id="esc-nome" class="input-pro" placeholder="Nome da Unidade (Ex: Moura Matriz)">
                 
                 <div class="grid grid-cols-2 gap-3">
-                    <select id="a-escola" class="input-pro" required></select>
-                    <div>
-                        <input type="date" id="a-nasc" class="input-pro" oninput="updateIdadePreview()" required>
-                        <p id="preview-idade" class="text-[10px] text-purple-400 font-black mt-1 uppercase">IDADE: --</p>
-                    </div>
+                    <input type="time" id="esc-inicio" class="input-pro" title="Início das aulas">
+                    <input type="time" id="esc-fim" class="input-pro" title="Término das aulas">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
-                    <input type="number" id="a-meta" class="input-pro" placeholder="Meta de Aulas">
-                    <input type="number" id="a-mensalidade" class="input-pro" placeholder="Mensalidade R$">
-                </div>
-
-                <select id="a-faixa" class="input-pro" required>
-                    <option value="" disabled selected>Escolha a Faixa</option>
-                    <optgroup label="Infantil (Até 15 anos)">
-                        <option value="Branca">01. Branca</option>
-                        <option value="Cinza/Branca">02. Cinza e Branca</option>
-                        <option value="Cinza">03. Cinza</option>
-                        <option value="Cinza/Preta">04. Cinza e Preta</option>
-                        <option value="Amarela/Branca">05. Amarela e Branca</option>
-                        <option value="Amarela">06. Amarela</option>
-                        <option value="Amarela/Preta">07. Amarela e Preta</option>
-                        <option value="Laranja/Branca">08. Laranja e Branca</option>
-                        <option value="Laranja">09. Laranja</option>
-                        <option value="Laranja/Preta">10. Laranja e Preta</option>
-                        <option value="Verde/Branca">11. Verde e Branca</option>
-                        <option value="Verde">12. Verde</option>
-                        <option value="Verde/Preta">13. Verde e Preta</option>
-                    </optgroup>
-                    <optgroup label="Adulto (+16 anos)">
-                        <option value="Azul">14. Azul</option>
-                        <option value="Roxa">15. Roxa</option>
-                        <option value="Marrom">16. Marrom</option>
-                        <option value="Preta">17. Preta</option>
-                    </optgroup>
-                </select>
-
-                <button type="submit" class="w-full bg-purple-600 py-4 rounded-xl font-black uppercase">Salvar Atleta</button>
-                <button type="button" onclick="closeM()" class="w-full text-zinc-600 font-black uppercase text-[10px]">Cancelar</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="m-gestao-geral" class="modal">
-        <div class="glass p-8 rounded-[2.5rem] w-full max-w-2xl">
-            <h2 class="text-xl font-black uppercase italic text-purple-500 mb-6">Gestão Unidades</h2>
-            <div class="bg-zinc-900/50 p-5 rounded-2xl mb-6 border border-zinc-800">
-                <input type="text" id="esc-nome" class="input-pro mb-3" placeholder="Nome da Escola">
-                <div class="grid grid-cols-2 gap-2 mb-3">
-                    <input type="time" id="esc-inicio" class="input-pro">
-                    <input type="time" id="esc-fim" class="input-pro">
-                </div>
-                <div class="flex gap-1 mb-4" id="dia-selector">
+                <div class="flex gap-1" id="dia-selector">
                     <div class="day-chip" data-day="SEG">S</div><div class="day-chip" data-day="TER">T</div>
                     <div class="day-chip" data-day="QUA">Q</div><div class="day-chip" data-day="QUI">Q</div>
                     <div class="day-chip" data-day="SEX">S</div><div class="day-chip" data-day="SAB">S</div>
                     <div class="day-chip" data-day="DOM">D</div>
                 </div>
-                <button onclick="addEscola()" class="w-full bg-emerald-600 py-3 rounded-lg font-black uppercase">Adicionar Escola</button>
-                <div id="lista-escolas" class="mt-4 space-y-2"></div>
+
+                <button onclick="addEscola()" class="w-full bg-red-600 py-4 rounded-xl font-black uppercase shadow-lg">Adicionar Unidade</button>
             </div>
 
-            <div class="bg-zinc-900/50 p-5 rounded-2xl border border-zinc-800">
-                <h3 class="text-xs font-black uppercase mb-3 text-blue-400 italic">Produtos Loja</h3>
-                <div class="flex gap-2">
-                    <input type="text" id="prod-nome" class="input-pro" placeholder="Item">
-                    <input type="number" id="prod-preco" class="input-pro w-24" placeholder="R$">
-                    <button onclick="addProduto()" class="bg-blue-600 px-4 rounded-xl font-black">+</button>
-                </div>
-                <div id="lista-produtos" class="mt-3 space-y-1 text-[11px]"></div>
-            </div>
+            <h3 class="text-[10px] font-black uppercase italic text-zinc-500 mb-2 tracking-widest">Unidades Cadastradas</h3>
+            <div id="lista-escolas" class="space-y-2 max-h-40 overflow-y-auto pr-2"></div>
+            
             <button onclick="closeM()" class="w-full mt-6 text-zinc-500 font-black uppercase text-[10px]">Fechar</button>
         </div>
     </div>
 
-    <div id="m-mural" class="modal"><div class="glass p-8 rounded-3xl w-full max-w-sm"><h2 class="text-xl font-black text-blue-500 mb-4">Mural</h2><textarea id="in-mural" class="input-pro h-32 mb-4"></textarea><button onclick="saveMural()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase">Publicar</button></div></div>
-    <div id="m-financeiro" class="modal"><div class="glass p-8 rounded-3xl w-full max-w-sm text-center"><h2 class="text-xl font-black text-emerald-500 mb-4 italic">TOTAL EM CAIXA</h2><p id="saldo-total" class="text-4xl font-black text-white">R$ 0,00</p><button onclick="closeM()" class="mt-8 text-xs font-black uppercase">Voltar</button></div></div>
-    <div id="m-venda" class="modal"><div class="glass p-8 rounded-3xl w-full max-w-sm"><h2 class="text-xl font-black text-blue-400 mb-4 uppercase">Lojinha</h2><p id="venda-nome" class="text-xs mb-4 text-zinc-400 font-bold italic"></p><input type="hidden" id="venda-id"><select id="venda-item" class="input-pro mb-4"></select><button onclick="execVenda()" class="w-full bg-blue-600 py-4 rounded-xl font-black uppercase">Finalizar Venda</button></div></div>
+    <div id="m-aluno" class="modal">
+        <div class="glass p-8 rounded-[2.5rem] w-full max-w-lg border border-red-600/20">
+            <h2 class="text-xl font-black uppercase italic text-red-600 mb-6">Cadastro Moura BJJ</h2>
+            <form onsubmit="saveAluno(event)" class="space-y-4">
+                <input type="hidden" id="a-id">
+                <input type="text" id="a-nome" class="input-pro" placeholder="Nome Completo" required>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="tel" id="a-whats" class="input-pro" placeholder="WhatsApp (DDD+Número)">
+                    <input type="number" id="a-peso" step="0.1" class="input-pro" placeholder="Peso (kg)">
+                </div>
 
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs px-4">
-        <button onclick="openM('m-checkin')" class="w-full bg-emerald-600 py-6 rounded-full font-black text-xl italic shadow-2xl">CHECK-IN</button>
+                <div class="grid grid-cols-2 gap-3">
+                    <select id="a-escola" class="input-pro" required></select>
+                    <input type="date" id="a-nasc" class="input-pro" required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <input type="number" id="a-meta" class="input-pro" placeholder="Meta Aulas/Mês">
+                    <input type="number" id="a-mensalidade" class="input-pro" placeholder="Mensalidade R$">
+                </div>
+
+                <select id="a-faixa" class="input-pro" required>
+                    <option value="" disabled selected>Selecionar Faixa (17 Opções)</option>
+                    <optgroup label="Infantil/Juvenil">
+                        <option value="Branca">Branca</option><option value="Cinza/Branca">Cinza/Branca</option>
+                        <option value="Cinza">Cinza</option><option value="Cinza/Preta">Cinza/Preta</option>
+                        <option value="Amarela/Branca">Amarela/Branca</option><option value="Amarela">Amarela</option>
+                        <option value="Amarela/Preta">Amarela/Preta</option><option value="Laranja/Branca">Laranja/Branca</option>
+                        <option value="Laranja">Laranja</option><option value="Laranja/Preta">Laranja/Preta</option>
+                        <option value="Verde/Branca">Verde/Branca</option><option value="Verde">Verde</option>
+                        <option value="Verde/Preta">Verde/Preta</option>
+                    </optgroup>
+                    <optgroup label="Adulto">
+                        <option value="Azul">Azul</option><option value="Roxa">Roxa</option><option value="Marrom">Marrom</option><option value="Preta">Preta</option>
+                    </optgroup>
+                </select>
+
+                <button type="submit" class="w-full bg-red-600 py-4 rounded-xl font-black uppercase shadow-lg">Confirmar Atleta</button>
+                <button type="button" onclick="closeM()" class="w-full text-zinc-600 font-black text-[10px] uppercase mt-2">Cancelar</button>
+            </form>
+        </div>
     </div>
 
-    <div id="m-checkin" class="modal"><div class="glass p-10 rounded-[3rem] w-full max-w-xs text-center"><h2 class="text-2xl font-black mb-6 italic tracking-widest">ID DO ATLETA</h2><input type="number" id="c-id" class="input-pro text-center text-5xl h-24 mb-6"><button onclick="checkin()" class="w-full bg-emerald-600 py-5 rounded-2xl font-black uppercase">Confirmar Presença</button></div></div>
+    <div id="m-mural" class="modal">
+        <div class="glass p-8 rounded-[2.5rem] w-full max-w-lg">
+            <h2 class="text-xl font-black uppercase italic text-red-600 mb-4">Mural de Avisos</h2>
+            <textarea id="texto-mural" class="input-pro h-32 mb-4" placeholder="Escreva o comunicado oficial..."></textarea>
+            <button onclick="enviarMuralGrupo()" class="w-full bg-emerald-600 py-4 rounded-xl font-black uppercase flex items-center justify-center gap-2 mb-4">ENVIAR NO WHATSAPP 🟢</button>
+            <button onclick="closeM()" class="w-full text-zinc-500 font-black text-[10px] uppercase">Fechar</button>
+        </div>
+    </div>
+
+    <div id="m-financeiro" class="modal">
+        <div class="glass p-6 rounded-[2.5rem] w-full max-w-2xl border border-emerald-500/20">
+            <h2 class="text-xl font-black uppercase italic text-emerald-500 mb-6">Gestão de Caixa</h2>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="bg-emerald-500/10 p-4 rounded-2xl border border-emerald-500/20"><p class="text-[9px] font-black uppercase">Recebido</p><p id="fin-recebido" class="text-2xl font-black text-white">R$ 0,00</p></div>
+                <div class="bg-red-500/10 p-4 rounded-2xl border border-red-500/20"><p class="text-[9px] font-black uppercase">A Receber</p><p id="fin-pendente" class="text-2xl font-black text-white">R$ 0,00</p></div>
+            </div>
+            <div id="lista-financeira-alunos" class="max-h-60 overflow-y-auto space-y-2 mb-6 pr-2"></div>
+            <div class="flex gap-2">
+                <button onclick="resetMesFinanceiro()" class="flex-1 bg-zinc-800 py-3 rounded-xl font-black text-[10px] uppercase">Novo Mês</button>
+                <button onclick="closeM()" class="flex-1 bg-zinc-200 py-3 rounded-xl font-black text-[10px] uppercase text-black">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs px-4">
+        <button onclick="openM('m-checkin')" class="w-full bg-red-600 py-6 rounded-full font-black text-xl italic shadow-2xl border-4 border-black active:scale-95 transition">OSS! CHECK-IN</button>
+    </div>
+
+    <div id="m-checkin" class="modal"><div class="glass p-10 rounded-[3rem] w-full max-w-xs text-center border-2 border-red-600/30"><h2 class="text-2xl font-black mb-6 italic uppercase">ID</h2><input type="number" id="c-id" class="input-pro text-center text-5xl h-24 mb-6 border-red-600/50" placeholder="0000"><button onclick="checkin()" class="w-full bg-red-600 py-5 rounded-2xl font-black uppercase shadow-lg">Confirmar</button></div></div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('BJJ_FLOW_V8')) || { atletas: [], escolas: [], produtos: [], mural: "" };
+        let db = JSON.parse(localStorage.getItem('MOURA_BJJ_V_ULTRA')) || { atletas: [], escolas: [] };
 
+        // Seleção de dias
         document.querySelectorAll('.day-chip').forEach(c => c.onclick = () => c.classList.toggle('selected'));
 
         function openM(id, autoEscola = null) {
             document.getElementById(id).classList.add('active');
             if(id === 'm-aluno') {
                 const sel = document.getElementById('a-escola');
-                sel.innerHTML = db.escolas.map(e => `<option value="${e.n}" ${autoEscola === e.n ? 'selected' : ''}>${e.n}</option>`).join('') || '<option value="Padrão">Padrão</option>';
+                sel.innerHTML = db.escolas.map(e => `<option value="${e.n}" ${autoEscola === e.n ? 'selected' : ''}>${e.n}</option>`).join('') || '<option value="Padrão">Matriz</option>';
             }
-            if(id === 'm-gestao-geral') { renderEscolas(); renderProdutos(); }
-            if(id === 'm-financeiro') calcFin();
+            if(id === 'm-gestao-geral') renderEscolas();
+            if(id === 'm-financeiro') renderFinanceiro();
         }
+
         function closeM() { document.querySelectorAll('.modal').forEach(m => m.classList.remove('active')); }
 
-        function calcIdade(dn) {
-            if(!dn) return "--";
-            const n = new Date(dn); const h = new Date();
-            let i = h.getFullYear() - n.getFullYear();
-            if (h.getMonth() < n.getMonth() || (h.getMonth() == n.getMonth() && h.getDate() < n.getDate())) i--;
-            return i || 0;
-        }
-        function updateIdadePreview() {
-            const v = document.getElementById('a-nasc').value;
-            document.getElementById('preview-idade').innerText = "IDADE: " + calcIdade(v) + " ANOS";
-        }
+        function save() { localStorage.setItem('MOURA_BJJ_V_ULTRA', JSON.stringify(db)); render(); }
 
+        // GESTÃO DE UNIDADES (CORRIGIDO)
         function addEscola() {
             const n = document.getElementById('esc-nome').value.toUpperCase();
-            const i = document.getElementById('esc-inicio').value;
-            const f = document.getElementById('esc-fim').value;
-            const d = Array.from(document.querySelectorAll('.day-chip.selected')).map(x => x.dataset.day);
-            if(n && i && f) { db.escolas.push({n, i, f, d, id: Date.now()}); save(); renderEscolas(); }
+            const hI = document.getElementById('esc-inicio').value;
+            const hF = document.getElementById('esc-fim').value;
+            const dias = Array.from(document.querySelectorAll('.day-chip.selected')).map(x => x.dataset.day);
+
+            if(n && hI && hF && dias.length > 0) {
+                db.escolas.push({ n, hI, hF, dias, id: Date.now() });
+                save();
+                renderEscolas();
+                // Limpar campos
+                document.getElementById('esc-nome').value = "";
+                document.getElementById('esc-inicio').value = "";
+                document.getElementById('esc-fim').value = "";
+                document.querySelectorAll('.day-chip').forEach(c => c.classList.remove('selected'));
+            } else {
+                alert("Preencha Nome, Horários e escolha os Dias!");
+            }
         }
+
         function renderEscolas() {
-            document.getElementById('lista-escolas').innerHTML = db.escolas.map(e => `
-                <div class="bg-zinc-800 p-3 rounded-xl flex justify-between items-center text-[10px] border border-zinc-700">
-                    <span><b>${e.n}</b> (${e.i}-${e.f})</span>
-                    <button onclick="closeM(); openM('m-aluno', '${e.n}')" class="text-purple-400 font-black">+ ALUNO</button>
+            const lista = document.getElementById('lista-escolas');
+            lista.innerHTML = db.escolas.map(e => `
+                <div class="bg-zinc-800 p-3 rounded-xl flex justify-between items-center border border-zinc-700">
+                    <div>
+                        <p class="text-[10px] font-black text-red-500 italic uppercase">${e.n}</p>
+                        <p class="text-[8px] text-zinc-500 font-bold uppercase">${e.hI} - ${e.hF} • ${e.dias.join(', ')}</p>
+                    </div>
+                    <button onclick="delEscola(${e.id})" class="text-red-900 font-black text-[9px]">REMOVER</button>
                 </div>`).join('');
         }
 
-        function addProduto() {
-            const n = document.getElementById('prod-nome').value.toUpperCase();
-            const p = parseFloat(document.getElementById('prod-preco').value);
-            if(n && p) { db.produtos.push({n, p, id: Date.now()}); save(); renderProdutos(); }
-        }
-        function renderProdutos() {
-            document.getElementById('lista-produtos').innerHTML = db.produtos.map(p => `<div class="bg-zinc-800 p-2 rounded flex justify-between"><span>${p.n}</span><span>R$ ${p.p}</span></div>`).join('');
+        function delEscola(id) {
+            if(confirm("Excluir esta unidade?")) {
+                db.escolas = db.escolas.filter(e => e.id !== id);
+                save(); renderEscolas();
+            }
         }
 
+        // GESTÃO DE ATLETAS
         function saveAluno(e) {
             e.preventDefault();
             const id = document.getElementById('a-id').value;
             const obj = {
                 id: id ? parseInt(id) : Date.now(),
                 nome: document.getElementById('a-nome').value.toUpperCase(),
+                whats: document.getElementById('a-whats').value,
+                peso: document.getElementById('a-peso').value,
                 escola: document.getElementById('a-escola').value,
                 nasc: document.getElementById('a-nasc').value,
-                meta: parseInt(document.getElementById('a-meta').value) || 0,
+                meta: parseInt(document.getElementById('a-meta').value) || 20,
                 mensalidade: parseFloat(document.getElementById('a-mensalidade').value) || 0,
                 faixa: document.getElementById('a-faixa').value,
-                frequencia: id ? db.atletas.find(x => x.id == id).frequencia : 0,
-                compras: id ? db.atletas.find(x => x.id == id).compras : []
+                pago: id ? db.atletas.find(x => x.id == id).pago : false,
+                frequencia: id ? db.atletas.find(x => x.id == id).frequencia : 0
             };
             if(id) db.atletas[db.atletas.findIndex(x => x.id == id)] = obj; else db.atletas.push(obj);
             save(); closeM();
+        }
+
+        function calcIdade(dn) {
+            if(!dn) return "";
+            const n = new Date(dn); const h = new Date();
+            let i = h.getFullYear() - n.getFullYear();
+            if (h.getMonth() < n.getMonth() || (h.getMonth() == n.getMonth() && h.getDate() < n.getDate())) i--;
+            return i + " ANOS";
+        }
+
+        function render() {
+            document.getElementById('stats-topo').innerText = db.atletas.length + " ATLETAS REGISTRADOS";
+            document.getElementById('lista-alunos').innerHTML = db.atletas.map(a => {
+                const isApto = a.frequencia >= a.meta;
+                return `<tr class="text-[11px] border-b border-zinc-900">
+                    <td class="py-5 font-black text-white italic">#${a.id.toString().slice(-4)}<br>${a.nome}</td>
+                    <td class="font-bold text-zinc-400 font-mono">${a.peso ? a.peso+'kg' : '--'}<br><span class="text-[8px] uppercase font-black">${calcIdade(a.nasc)}</span></td>
+                    <td class="uppercase italic font-bold text-zinc-300">${a.faixa}<br><span class="text-red-500 text-[9px] font-black">${a.escola}</span></td>
+                    <td>
+                        <div class="w-24 bg-zinc-800 h-1 rounded-full overflow-hidden mb-1"><div class="bg-red-600 h-full" style="width:${Math.min((a.frequencia/a.meta)*100, 100)}%"></div></div>
+                        <div class="flex items-center gap-2">${isApto ? '<span class="badge-apto">APTO AO GRAU</span>' : '<span class="text-[9px] font-black">'+a.frequencia+'/'+a.meta+' AULAS</span>'}</div>
+                    </td>
+                    <td><span class="${a.pago ? 'text-emerald-500' : 'text-red-600'} font-black italic uppercase">${a.pago ? 'PAGO ✓' : 'ABERTO'}</span></td>
+                    <td class="text-right">
+                        <button onclick="cobrarIndividual(${a.id})" class="mr-3">💬</button>
+                        <button onclick="editAluno(${a.id})" class="bg-zinc-800 px-3 py-1 rounded text-[8px] font-black">EDITAR</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        // FINANCEIRO E WHATSAPP
+        function renderFinanceiro() {
+            let recebido = 0, pendente = 0;
+            const lista = document.getElementById('lista-financeira-alunos');
+            lista.innerHTML = db.atletas.map(a => {
+                if(a.pago) recebido += a.mensalidade; else pendente += a.mensalidade;
+                return `<div class="bg-zinc-900 p-3 rounded-xl flex justify-between items-center border border-zinc-800">
+                    <div><p class="text-[10px] font-black">${a.nome}</p><p class="text-[9px] font-bold ${a.pago ? 'text-emerald-500' : 'text-red-500'} italic">R$ ${a.mensalidade.toFixed(2)}</p></div>
+                    <div class="flex gap-2">
+                        <button onclick="cobrarIndividual(${a.id})" class="bg-zinc-800 p-2 rounded-lg">💬</button>
+                        <button onclick="togglePagamento(${a.id})" class="text-[9px] font-black px-4 py-2 rounded-lg ${a.pago ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500 text-white'} uppercase">${a.pago ? 'PAGO ✓' : 'BAIXA $'}</button>
+                    </div>
+                </div>`;
+            }).join('');
+            document.getElementById('fin-recebido').innerText = "R$ " + recebido.toFixed(2);
+            document.getElementById('fin-pendente').innerText = "R$ " + pendente.toFixed(2);
+        }
+
+        function togglePagamento(id) { const a = db.atletas.find(x => x.id == id); a.pago = !a.pago; save(); renderFinanceiro(); }
+
+        function resetMesFinanceiro() { if(confirm("Virar o mês e resetar pagamentos/presenças?")) { db.atletas.forEach(a => { a.pago = false; a.frequencia = 0; }); save(); renderFinanceiro(); } }
+
+        function cobrarIndividual(id) {
+            const a = db.atletas.find(x => x.id == id);
+            const msg = `Oss ${a.nome}! Moura BJJ passando para lembrar do vencimento da mensalidade (R$ ${a.mensalidade.toFixed(2)}).`;
+            window.open(`https://wa.me/55${a.whats}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function enviarMuralGrupo() {
+            const t = document.getElementById('texto-mural').value;
+            if(!t) return;
+            window.open(`https://wa.me/?text=${encodeURIComponent("*AVISO MOURA BJJ* 🥋\n\n" + t)}`, '_blank');
+        }
+
+        function checkin() {
+            const id = document.getElementById('c-id').value;
+            const a = db.atletas.find(x => x.id.toString().slice(-4) == id || x.id == id);
+            if(a) { a.frequencia++; alert("CHECK-IN: " + a.nome + " OSS!"); save(); closeM(); } else alert("ID INVÁLIDO");
         }
 
         function editAluno(id) {
             const a = db.atletas.find(x => x.id == id);
             document.getElementById('a-id').value = a.id;
             document.getElementById('a-nome').value = a.nome;
+            document.getElementById('a-whats').value = a.whats || "";
+            document.getElementById('a-peso').value = a.peso || "";
             document.getElementById('a-nasc').value = a.nasc;
             document.getElementById('a-meta').value = a.meta;
             document.getElementById('a-mensalidade').value = a.mensalidade;
             document.getElementById('a-faixa').value = a.faixa;
-            document.getElementById('titulo-aluno').innerText = "Editar Cadastro";
-            openM('m-aluno', a.escola); updateIdadePreview();
+            openM('m-aluno', a.escola);
         }
 
-        function delAluno(id) { if(confirm("Excluir definitivamente?")) { db.atletas = db.atletas.filter(x => x.id != id); save(); } }
-
-        function checkin() {
-            const id = document.getElementById('c-id').value;
-            const a = db.atletas.find(x => x.id.toString().slice(-4) == id || x.id == id);
-            if(a) { a.frequencia++; alert("PRESENÇA CONFIRMADA: " + a.nome); save(); closeM(); } else alert("ID NÃO ENCONTRADO");
-        }
-
-        function openVenda(id) {
-            const a = db.atletas.find(x => x.id == id);
-            document.getElementById('venda-nome').innerText = "ATLETA: " + a.nome;
-            document.getElementById('venda-id').value = id;
-            document.getElementById('venda-item').innerHTML = db.produtos.map(p => `<option value="${p.p}">${p.n} - R$ ${p.p}</option>`).join('');
-            openM('m-venda');
-        }
-        function execVenda() {
-            const a = db.atletas.find(x => x.id == document.getElementById('venda-id').value);
-            a.compras.push(parseFloat(document.getElementById('venda-item').value));
-            save(); closeM();
-        }
-
-        function saveMural() { db.mural = document.getElementById('in-mural').value; save(); closeM(); }
-        function calcFin() {
-            let t = 0;
-            db.atletas.forEach(a => { t += a.mensalidade; a.compras.forEach(c => t += c); });
-            document.getElementById('saldo-total').innerText = "R$ " + t.toFixed(2);
-        }
-
-        function save() { localStorage.setItem('BJJ_FLOW_V8', JSON.stringify(db)); render(); }
         function resetFormAluno() { 
             document.getElementById('a-id').value = ""; document.getElementById('a-nome').value = ""; 
-            document.getElementById('a-nasc').value = ""; document.getElementById('preview-idade').innerText = "IDADE: --";
-            document.getElementById('titulo-aluno').innerText = "Ficha do Atleta";
+            document.getElementById('a-whats').value = ""; document.getElementById('a-peso').value = "";
+            document.getElementById('a-nasc').value = ""; document.getElementById('a-meta').value = "";
+            document.getElementById('a-mensalidade').value = "";
         }
 
-        function render() {
-            document.getElementById('stats-topo').innerText = db.atletas.length + " ATLETAS";
-            const m = document.getElementById('display-mural');
-            if(db.mural) { m.innerText = "📢 " + db.mural; m.classList.remove('hidden'); } else m.classList.add('hidden');
-
-            document.getElementById('lista-alunos').innerHTML = db.atletas.map(a => {
-                const prog = a.meta > 0 ? Math.min((a.frequencia / a.meta) * 100, 100) : 0;
-                const totalVenda = a.compras.reduce((acc, v) => acc + v, 0);
-                return `<tr class="text-[11px] border-b border-zinc-900">
-                    <td class="py-5 font-black">#${a.id.toString().slice(-4)}<br><span class="text-white text-xs">${a.nome}</span></td>
-                    <td class="italic font-bold text-zinc-400 uppercase">${calcIdade(a.nasc)} ANOS<br><span class="text-[8px] text-zinc-600">DN: ${a.nasc}</span></td>
-                    <td class="uppercase italic font-bold text-zinc-300">${a.faixa}<br><span class="text-purple-400 text-[9px] font-black">${a.escola}</span></td>
-                    <td><div class="w-20 bg-zinc-800 h-1 rounded-full mb-1"><div class="bg-purple-600 h-full shadow-[0_0_8px_#a855f7]" style="width:${prog}%"></div></div><span class="text-[9px] text-zinc-500 font-black">${a.frequencia}/${a.meta}</span></td>
-                    <td><button onclick="openVenda(${a.id})" class="text-emerald-400 font-black italic underline">R$ ${(a.mensalidade + totalVenda).toFixed(2)}</button></td>
-                    <td class="text-right">
-                        <button onclick="editAluno(${a.id})" class="text-blue-400 font-black uppercase text-[10px] mr-3">Editar</button>
-                        <button onclick="delAluno(${a.id})" class="text-red-900 font-black uppercase text-[10px]">X</button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
         render();
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
-        }
     </script>
 </body>
 </html>
