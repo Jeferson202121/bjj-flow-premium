@@ -1,0 +1,17 @@
+{
+  "name": "BJJ Flow Pro",
+  "short_name": "BJJFlow",
+  "description": "Gestão Completa de Jiu-Jitsu",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0b0b0d",
+  "theme_color": "#a855f7",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3003/3003761.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
